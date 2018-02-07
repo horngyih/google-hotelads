@@ -1,0 +1,33 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.ubicompsystem</groupId>
+    <artifactId>google-hotelads-hotelfeed</artifactId>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
+
+    <name>hotelfeed</name>
+
+    <properties>
+        <springVersion>4.3.14.RELEASE</springVersion>
+        <servletVersion>4.0.0</servletVersion>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${springVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servletVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ubicompsystem</groupId>
+            <artifactId>google-hotelads-model</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+</project>
