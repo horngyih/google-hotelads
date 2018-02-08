@@ -14,6 +14,7 @@ public class FeedWebConfig
 {
 	public void onStartup(ServletContext container ) throws ServletException {
 		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
+		rootContext.register(FeedConfig.class);
 		
 		ContextLoaderListener contextListener = new ContextLoaderListener(rootContext);
 		container.addListener(contextListener);
