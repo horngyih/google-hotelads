@@ -4,6 +4,7 @@
     <groupId>com.ubicompsystem</groupId>
     <artifactId>google-hotelads-models</artifactId>
     <version>1.0.0</version>
+    <packaging>jar</packaging>
 
     <name>google-hotelads-models</name>
 
@@ -40,7 +41,7 @@
                             <goal>xjc</goal>
                         </goals>
                         <configuration>
-                            <packageName>com.ubicompsystems.integration.google.hotelads</packageName>
+                            <packageName>com.ubicompsystem.integration.google.hotelads</packageName>
                             <sources>
                                 <source>src/main/resources/xsd/com/gstatic/localfeed</source>
                             </sources>

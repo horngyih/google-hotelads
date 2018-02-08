@@ -6,5 +6,5 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackages="com.ubicompsystem.integration.google.hotelads")
+@ComponentScan(basePackages="com.ubicompsystem.integration.google.hotelads.hotelfeed")
 public class FeedConfig {}
