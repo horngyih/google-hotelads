@@ -22,9 +22,13 @@ import com.ubicompsystem.integration.google.hotelads.Listings;
 import com.ubicompsystem.integration.google.hotelads.Review;
 import com.ubicompsystem.integration.google.hotelads.Text;
 import com.ubicompsystem.integration.google.hotelads.YesNoValues;
+import com.ubicompsystem.integration.google.hotelads.hotelfeed.services.DefaultCorePropertyService;
 
 @RestController
 public class HotelFeedResource {
+	
+	//TODO : Convert to interface and Autowire
+	DefaultCorePropertyService propertyService = new DefaultCorePropertyService();
 	
 	@RequestMapping(value="/", produces=MediaType.APPLICATION_XML_VALUE)
 	public Listings getListings() {

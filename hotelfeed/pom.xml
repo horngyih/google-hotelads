@@ -13,6 +13,7 @@
         <springVersion>4.3.14.RELEASE</springVersion>
         <servletVersion>4.0.0</servletVersion>
         <jettyVersion>9.4.8.v20171121</jettyVersion>
+        <coreVersion>1.1</coreVersion>
     </properties>
 
     <dependencies>
@@ -36,6 +37,11 @@
         	<groupId>com.ubicompsystem</groupId>
         	<artifactId>google-hotelads-models</artifactId>
         	<version>1.0.0</version>
+        </dependency>
+        <dependency>
+        	<groupId>ubicompsystem.common</groupId>
+        	<artifactId>common-data</artifactId>
+        	<version>${coreVersion}</version>
         </dependency>
     </dependencies>
     
