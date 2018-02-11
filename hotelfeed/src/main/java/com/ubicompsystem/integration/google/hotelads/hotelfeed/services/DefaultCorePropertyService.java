@@ -1,9 +1,8 @@
 package com.ubicompsystem.integration.google.hotelads.hotelfeed.services;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import static com.ubicompsystem.common.util.FunctionalTools.*;
+
+import java.util.*;
 
 import com.ubicompsystem.data.contact.address.AddressData;
 import com.ubicompsystem.data.contact.address.AddressTypeCode;
@@ -11,25 +10,39 @@ import com.ubicompsystem.data.property.PropertyAttributeData;
 import com.ubicompsystem.data.property.PropertyBizObj;
 import com.ubicompsystem.data.property.PropertyData;
 import com.ubicompsystem.enumerate.PropertyAttribute;
-import com.ubicompsystem.integration.google.hotelads.Address;
-import com.ubicompsystem.integration.google.hotelads.AddressTypes;
-import com.ubicompsystem.integration.google.hotelads.Component;
-import com.ubicompsystem.integration.google.hotelads.LanguageContent;
-import com.ubicompsystem.integration.google.hotelads.Listing;
-import com.ubicompsystem.integration.google.hotelads.Name;
-import com.ubicompsystem.integration.google.hotelads.Text;
+import com.ubicompsystem.integration.google.hotelads.*;
 
 public class DefaultCorePropertyService {
-	
+
+	public Listings getListings(){
+		Listings result = new Listings();
+		result.getListing().add(generateListing());
+		System.out.println( printListing(generateListing()) );
+		return result;
+	}
+
 	public Listing generateListing() {
 		PropertyBizObj property = new PropertyBizObj();
-		property.setPropertyData(new PropertyData());
-		
+		PropertyData propertyData = new PropertyData();
+		property.setPropertyData(propertyData);
+		propertyData.setPropertyID(1);
+		propertyData.setCustomerID("TESTCUST");
+		propertyData.setPropertyCode("TESTPROP");
+
 		AddressData address = new AddressData();
 		address.setAddress("1, General Street,\n Gramacy Park" );
 		address.setCity( "Test City" );
 		address.setState( "Test State" );
-		
+		property.setAddressList(Arrays.asList(address));
+
+		propertyData.setPropertyName( "Test Property", "en" );
+
+		PropertyAttributeData description = new PropertyAttributeData();
+		description.setAttributeCode(PropertyAttribute.DESC.name());
+		description.setAttributeValue("Property Description");
+		description.setLanguageCode("en");
+		propertyData.getAttributeList().add( description );
+
 		return transform( property );
 	}
 	
@@ -37,6 +50,7 @@ public class DefaultCorePropertyService {
 		Listing result = null;
 		if( property != null ) {
 			result = new Listing();
+            result.setContent(new Content());
 			populateID(result, property);
 			populateAddress(result, property);
 			populateAttributes( result, property );
@@ -70,6 +84,7 @@ public class DefaultCorePropertyService {
 	public void populateAttributes( Listing listing, PropertyBizObj property ) {
 		if( listing != null && property != null ) {
 			Map<String, Map<String, List<PropertyAttributeData>>> propertyAttributes = mapPropertyAttributesByLanguage(property);
+			System.out.println( propertyAttributes );
 			populateName( listing, propertyAttributes );
 			populateDescription( listing, propertyAttributes );
 		}
@@ -84,19 +99,21 @@ public class DefaultCorePropertyService {
 					if( attributes != null && attributes.size() > 0 ) {
 						PropertyAttributeData nameAttribute =  attributes.get(0);
 						String propertyName = nameAttribute.getAttributeValue();
+						System.out.println( "Name : " + propertyName );
 						if( propertyName != null && !"".equals(propertyName.trim())) {
-							if( languageCode.contains("_") ) {
-								languageCode = languageCode.substring(0, languageCode.indexOf("_") );
-							}
-							
+							if( languageCode != null && languageCode.contains("_") ) {
+								languageCode = languageCode.substring(0, languageCode.indexOf("_") ).toUpperCase();
+							} else {
+							    languageCode = LanguageContent.EN.name();
+                            }
 							try {
 								LanguageContent contentLanguage = LanguageContent.valueOf(languageCode);
 								Name name = new Name();
 								name.setLanguage(contentLanguage);
 								name.setValue(propertyName);
+								System.out.println( "Setting Name : " + name.getValue() + "(" + name.getLanguage() + ")" );
 								listing.getName().add(name);
 							} catch( IllegalArgumentException illegalArgEx ) {
-								//TODO : Log?
 							}
 						}
 					}
@@ -115,7 +132,7 @@ public class DefaultCorePropertyService {
 						PropertyAttributeData descAttribute = attributes.get(0);
 						String propertyDesc = descAttribute.getAttributeValue();
 						if( propertyDesc != null && !"".equals(propertyDesc.trim())) {
-							if( languageCode.contains("_") ) {
+							if( languageCode != null && languageCode.contains("_") ) {
 								languageCode = languageCode.substring(0, languageCode.indexOf("_"));
 							}
 							Text text = new Text();
@@ -168,7 +185,10 @@ public class DefaultCorePropertyService {
 				if( longitude != null && latitude != null ) {
 					listing.setLongitude(longitude);
 					listing.setLatitude(latitude);
-				}
+				 } else {
+				    listing.setLongitude( 100f );
+				    listing.setLatitude( 100f );
+                }
 			}
 		}
 	}
@@ -250,4 +270,24 @@ public class DefaultCorePropertyService {
 		}
 		return result;
 	}
+
+	public static String printListing( Listing listing ){
+	    StringBuilder result = new StringBuilder();
+	    result.append( "Listing\n" );
+	    result.append( "ID : " );
+	    result.append( listing.getId() );
+	    result.append( "\n" );
+	    result.append( "Names : " ).append( "(" ).append( listing.getName().size() ).append(")\n");
+	    for( Name name : listing.getName() ){
+	        result.append( "Name : " )
+                    .append( name.getValue() )
+                    .append("(")
+                    .append(name.getLanguage())
+                    .append(")\n");
+        }
+        result.append( "Location : " ).append( listing.getLongitude() ).append( ", " ).append( listing.getLatitude() );
+	    result.append("\n");
+        return result.toString();
+    }
+
 }

@@ -32,9 +32,7 @@ public class HotelFeedResource {
 	
 	@RequestMapping(value="/", produces=MediaType.APPLICATION_XML_VALUE)
 	public Listings getListings() {
-		Listings result = new Listings();
-		result.getListing().addAll(generateListings());
-		return result;
+		return propertyService.getListings();
 	}
 	
 	protected List<Listing> generateListings(){

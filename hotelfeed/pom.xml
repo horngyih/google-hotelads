@@ -43,7 +43,16 @@
         	<artifactId>common-data</artifactId>
         	<version>${coreVersion}</version>
         </dependency>
-    </dependencies>
+        <dependency>
+        	<groupId>ubicompsystem.common</groupId>
+        	<artifactId>common-util</artifactId>
+        	<version>${coreVersion}</version>
+        </dependency>
+        <dependency>
+        	<groupId>ubicompsystem.common</groupId>
+        	<artifactId>common-exception</artifactId>
+        	<version>${coreVersion}</version>
+        </dependency>  </dependencies>
     
     <build>
     	<finalName>${project.name}</finalName>
