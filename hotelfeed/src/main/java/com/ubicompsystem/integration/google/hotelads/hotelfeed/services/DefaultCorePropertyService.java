@@ -1,9 +1,12 @@
 package com.ubicompsystem.integration.google.hotelads.hotelfeed.services;
 
-import static com.ubicompsystem.common.util.FunctionalTools.*;
-
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.ubicompsystem.common.util.Logger;
+import com.ubicompsystem.core.property.service.PropertyService;
 import com.ubicompsystem.data.contact.address.AddressData;
 import com.ubicompsystem.data.contact.address.AddressTypeCode;
 import com.ubicompsystem.data.property.PropertyAttributeData;
@@ -14,8 +17,14 @@ import com.ubicompsystem.integration.google.hotelads.*;
 
 public class DefaultCorePropertyService {
 
+	@Autowired
+	PropertyService propertyService;
+	
+	Logger log = new Logger( this.getClass() );
+	
 	public Listings getListings(){
 		Listings result = new Listings();
+		System.out.println( getPropertyService() );
 		result.getListing().add(generateListing());
 		System.out.println( printListing(generateListing()) );
 		return result;
@@ -269,6 +278,10 @@ public class DefaultCorePropertyService {
 			}
 		}
 		return result;
+	}
+	
+	private PropertyService getPropertyService() {
+		return this.propertyService;
 	}
 
 	public static String printListing( Listing listing ){

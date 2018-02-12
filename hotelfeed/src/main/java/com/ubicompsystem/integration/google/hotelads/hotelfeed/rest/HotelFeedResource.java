@@ -5,8 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ubicompsystem.integration.google.hotelads.Address;
 import com.ubicompsystem.integration.google.hotelads.AddressTypes;
@@ -24,13 +25,14 @@ import com.ubicompsystem.integration.google.hotelads.Text;
 import com.ubicompsystem.integration.google.hotelads.YesNoValues;
 import com.ubicompsystem.integration.google.hotelads.hotelfeed.services.DefaultCorePropertyService;
 
-@RestController
+@Controller
 public class HotelFeedResource {
 	
 	//TODO : Convert to interface and Autowire
 	DefaultCorePropertyService propertyService = new DefaultCorePropertyService();
 	
 	@RequestMapping(value="/", produces=MediaType.APPLICATION_XML_VALUE)
+	@ResponseBody
 	public Listings getListings() {
 		return propertyService.getListings();
 	}

@@ -10,10 +10,11 @@
     <name>hotelfeed</name>
 
     <properties>
-        <springVersion>4.3.14.RELEASE</springVersion>
+        <springVersion>3.1.1.RELEASE</springVersion>
         <servletVersion>4.0.0</servletVersion>
         <jettyVersion>9.4.8.v20171121</jettyVersion>
         <coreVersion>1.1</coreVersion>
+        <cglibVersion>2.2</cglibVersion>
     </properties>
 
     <dependencies>
@@ -21,6 +22,12 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>${springVersion}</version>
+        </dependency>
+        <dependency>
+        	<groupId>cglib</groupId>
+        	<artifactId>cglib-nodep</artifactId>
+        	<version>${cglibVersion}</version>
+        	<scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -52,7 +59,15 @@
         	<groupId>ubicompsystem.common</groupId>
         	<artifactId>common-exception</artifactId>
         	<version>${coreVersion}</version>
-        </dependency>  </dependencies>
+        </dependency>
+        
+        <dependency>
+        	<groupId>ubicompsystem.core</groupId>
+        	<artifactId>core-property</artifactId>
+        	<version>${coreVersion}</version>
+        </dependency>
+          
+    </dependencies>
     
     <build>
     	<finalName>${project.name}</finalName>
