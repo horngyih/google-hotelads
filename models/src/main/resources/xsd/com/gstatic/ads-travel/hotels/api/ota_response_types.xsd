@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://www.opentravel.org/OTA/2003/05"
+           targetNamespace="http://www.opentravel.org/OTA/2003/05"
+           elementFormDefault="qualified">
+  <xs:complexType name="successType">
+  </xs:complexType>
+  <xs:complexType name="errorType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="Type" type="xs:integer" />
+        <xs:attribute name="Code" type="xs:integer" />
+        <xs:attribute name="Status">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="NotProcessed" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="ShortText" type="xs:string" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="errorsType">
+    <xs:sequence maxOccurs="unbounded">
+      <xs:element name="Error" type="errorType">
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="otaResponseType">
+    <xs:sequence>
+      <xs:element name="Success" type="successType" minOccurs="0" />
+      <xs:element name="Errors" type="errorsType" minOccurs="0" />
+    </xs:sequence>
+    <xs:attribute name="TimeStamp" type="xs:dateTime" />
+    <xs:attribute name="EchoToken" type="xs:string" />
+    <xs:attribute name="Version" type="xs:decimal" />
+  </xs:complexType>
+</xs:schema>
